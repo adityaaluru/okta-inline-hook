@@ -1,0 +1,30 @@
+service: okta-inline-hook
+
+frameworkVersion: "2"
+plugins:
+  - serverless-offline
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: "20201221"
+  apiGateway:
+    apiKeys:
+      - apiKey
+
+functions:
+  hello-get:
+    handler: handler.hello
+    memorySize: 256
+    events:
+      - http:
+          path: /
+          method: get
+          private: true
+  hello-post:
+    handler: handler.tokenHook
+    memorySize: 256
+    events:
+      - http:
+          path: /
+          method: post
+          private: true
